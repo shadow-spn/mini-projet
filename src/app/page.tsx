@@ -12,6 +12,8 @@ export default async function Home() {
     redirect('/login')
   }
 
+  const role = user.user_metadata?.role ?? 'citoyens'
+
   return (
     <div className="relative flex-1 flex flex-col items-center justify-center bg-[#0a0a0a] text-white px-4 py-12">
       {/* Abstract mesh background grid */}
@@ -55,6 +57,10 @@ export default async function Home() {
             <div className="flex flex-col gap-1">
               <span className="text-zinc-500 text-xs font-semibold uppercase tracking-wider">Provider</span>
               <span className="text-zinc-300 font-medium capitalize">{user.app_metadata.provider || 'Email'}</span>
+            </div>
+            <div className="flex flex-col gap-1">
+              <span className="text-zinc-500 text-xs font-semibold uppercase tracking-wider">Role</span>
+              <span className="text-zinc-300 font-medium capitalize">{role}</span>
             </div>
           </div>
         </div>
