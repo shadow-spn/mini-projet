@@ -2,9 +2,11 @@
 
 import React, { useState, useTransition } from 'react'
 import { login, signup } from '@/app/auth/actions'
+import { Button } from '@/components/ui/button'
 
 export default function AuthForm() {
   const [isSignUp, setIsSignUp] = useState(false)
+  const [role, setRole] = useState('citoyens')
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
@@ -139,11 +141,26 @@ export default function AuthForm() {
             />
           </div>
 
-          <button
-            type="submit"
-            disabled={isPending}
-            className="w-full h-12 mt-2 rounded-2xl bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-semibold transition-all duration-300 shadow-lg shadow-violet-500/20 active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center gap-2"
-          >
+          {isSignUp && (
+            <div className="flex flex-col gap-1.5">
+              <label className="text-xs font-semibold uppercase tracking-wider text-zinc-400" htmlFor="role">
+                Role
+              </label>
+              <select
+                id="role"
+                name="role"
+                value={role}
+                onChange={(event) => setRole(event.target.value)}
+                disabled={isPending}
+                className="w-full h-12 px-4 rounded-2xl bg-zinc-950/50 border border-zinc-800/80 text-white placeholder-zinc-500 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all duration-200"
+              >
+                <option value="citoyens">Citoyens</option>
+                <option value="provider">Provider</option>
+              </select>
+            </div>
+          )}
+
+          <Button type="submit" disabled={isPending} className="w-full mt-2 justify-center">
             {isPending ? (
               <>
                 <svg className="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
@@ -157,7 +174,7 @@ export default function AuthForm() {
             ) : (
               'Sign In'
             )}
-          </button>
+          </Button>
         </form>
       </div>
     </div>
