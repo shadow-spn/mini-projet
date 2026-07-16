@@ -32,6 +32,7 @@ export async function signup(formData: FormData) {
   
   const email = formData.get('email') as string
   const password = formData.get('password') as string
+  const role = (formData.get('role') as string) || 'citoyens'
   
   if (!email || !password) {
     return { error: 'Email and password are required' }
@@ -41,6 +42,9 @@ export async function signup(formData: FormData) {
     email,
     password,
     options: {
+      data: {
+        role,
+      },
       // By default, Supabase sends a confirmation email.
       // If email confirmation is disabled in your Supabase dashboard, 
       // the user will be logged in immediately.
